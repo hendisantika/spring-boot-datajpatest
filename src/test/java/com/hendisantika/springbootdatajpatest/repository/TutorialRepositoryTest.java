@@ -100,5 +100,29 @@ class TutorialRepositoryTest {
         assertThat(tutorials).hasSize(2).contains(tut1, tut3);
     }
 
+    @Test
+    public void should_update_tutorial_by_id() {
+        Tutorial tut1 = new Tutorial("Tut#1", "Desc#1", true);
+        entityManager.persist(tut1);
+
+        Tutorial tut2 = new Tutorial("Tut#2", "Desc#2", false);
+        entityManager.persist(tut2);
+
+        Tutorial updatedTut = new Tutorial("updated Tut#2", "updated Desc#2", true);
+
+        Tutorial tut = repository.findById(tut2.getId()).get();
+        tut.setTitle(updatedTut.getTitle());
+        tut.setDescription(updatedTut.getDescription());
+        tut.setPublished(updatedTut.isPublished());
+        repository.save(tut);
+
+        Tutorial checkTut = repository.findById(tut2.getId()).get();
+
+        assertThat(checkTut.getId()).isEqualTo(tut2.getId());
+        assertThat(checkTut.getTitle()).isEqualTo(updatedTut.getTitle());
+        assertThat(checkTut.getDescription()).isEqualTo(updatedTut.getDescription());
+        assertThat(checkTut.isPublished()).isEqualTo(updatedTut.isPublished());
+    }
+
 }
 
