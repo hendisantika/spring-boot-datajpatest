@@ -54,5 +54,18 @@ class TutorialRepositoryTest {
 
         assertThat(tutorials).hasSize(3).contains(tut1, tut2, tut3);
     }
+
+    @Test
+    public void should_find_tutorial_by_id() {
+        Tutorial tut1 = new Tutorial("Tut#1", "Desc#1", true);
+        entityManager.persist(tut1);
+
+        Tutorial tut2 = new Tutorial("Tut#2", "Desc#2", false);
+        entityManager.persist(tut2);
+
+        Tutorial foundTutorial = repository.findById(tut2.getId()).get();
+
+        assertThat(foundTutorial).isEqualTo(tut2);
+    }
 }
 
