@@ -124,5 +124,23 @@ class TutorialRepositoryTest {
         assertThat(checkTut.isPublished()).isEqualTo(updatedTut.isPublished());
     }
 
+    @Test
+    public void should_delete_tutorial_by_id() {
+        Tutorial tut1 = new Tutorial("Tut#1", "Desc#1", true);
+        entityManager.persist(tut1);
+
+        Tutorial tut2 = new Tutorial("Tut#2", "Desc#2", false);
+        entityManager.persist(tut2);
+
+        Tutorial tut3 = new Tutorial("Tut#3", "Desc#3", true);
+        entityManager.persist(tut3);
+
+        repository.deleteById(tut2.getId());
+
+        Iterable<Tutorial> tutorials = repository.findAll();
+
+        assertThat(tutorials).hasSize(2).contains(tut1, tut3);
+    }
+
 }
 
