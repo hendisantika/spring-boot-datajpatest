@@ -39,6 +39,20 @@ class TutorialRepositoryTest {
         assertThat(tutorial).hasFieldOrPropertyWithValue("published", true);
     }
 
+    @Test
+    public void should_find_all_tutorials() {
+        Tutorial tut1 = new Tutorial("Tut#1", "Desc#1", true);
+        entityManager.persist(tut1);
 
+        Tutorial tut2 = new Tutorial("Tut#2", "Desc#2", false);
+        entityManager.persist(tut2);
+
+        Tutorial tut3 = new Tutorial("Tut#3", "Desc#3", true);
+        entityManager.persist(tut3);
+
+        Iterable<Tutorial> tutorials = repository.findAll();
+
+        assertThat(tutorials).hasSize(3).contains(tut1, tut2, tut3);
+    }
 }
 
