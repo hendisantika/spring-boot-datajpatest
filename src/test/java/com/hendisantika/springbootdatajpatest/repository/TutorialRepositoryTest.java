@@ -142,5 +142,15 @@ class TutorialRepositoryTest {
         assertThat(tutorials).hasSize(2).contains(tut1, tut3);
     }
 
+    @Test
+    public void should_delete_all_tutorials() {
+        entityManager.persist(new Tutorial("Tut#1", "Desc#1", true));
+        entityManager.persist(new Tutorial("Tut#2", "Desc#2", false));
+
+        repository.deleteAll();
+
+        assertThat(repository.findAll()).isEmpty();
+    }
+
 }
 
