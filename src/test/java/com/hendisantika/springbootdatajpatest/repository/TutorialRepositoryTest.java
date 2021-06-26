@@ -30,5 +30,15 @@ class TutorialRepositoryTest {
         assertThat(tutorials).isEmpty();
     }
 
+    @Test
+    public void should_store_a_tutorial() {
+        Tutorial tutorial = repository.save(new Tutorial("Tut title", "Tut desc", true));
+
+        assertThat(tutorial).hasFieldOrPropertyWithValue("title", "Tut title");
+        assertThat(tutorial).hasFieldOrPropertyWithValue("description", "Tut desc");
+        assertThat(tutorial).hasFieldOrPropertyWithValue("published", true);
+    }
+
+
 }
 
